@@ -42,7 +42,7 @@ public class Similarity {
         }
         double v = avg / p1.getGenes().size();
         pathwaySimMap.get(p1).put(p2,v);
-        System.out.println(p1.getName()+"\t"+p2.getName()+"\t"+sameGene+"\t"+diffGene+" "+v);
+        //System.out.println(p1.getName()+"\t"+p2.getName()+"\t"+sameGene+"\t"+diffGene+" "+v);
         return v;
     }
 

@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -25,6 +26,31 @@ public class Reader {
             if(!pathways.contains(p))pathways.add(p);
 
         }
+    }
+
+    public void readNIHPathWays(Set<Pathway> pathways, Set genes, String paFile) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader(paFile));
+        String line="";
+        br.readLine();
+        HashMap<String, Pathway> ps = new HashMap();
+        while((line=br.readLine())!=null){
+
+            String arr[] = line.replaceAll("\"","").split(",");
+            String pathwayName = arr[1];
+            String gene = arr[3];
+            Pathway pathway = null;
+            if(ps.containsKey(pathwayName))
+                pathway = ps.get(pathwayName);
+            else {
+                pathway= new Pathway(pathwayName);
+
+            }
+            Gene g = new Gene(gene);
+            if(!genes.contains(g)) genes.add(g);
+            pathway.addGene(g);
+            ps.put(pathwayName,pathway);
+        }
+        pathways.addAll(ps.values());
     }
 
     public void readClusters(Map<String,Cluster> clusters, Set ptmsites, String file) throws IOException {
